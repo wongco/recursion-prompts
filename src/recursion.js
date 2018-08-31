@@ -7,26 +7,84 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 var factorial = function(n) {
+	// base case n negative, return null
+	if(n < 0) {
+		return null;
+	}
+
+	// base case n equals 0, returns 1
+	if(n === 0) {
+		return 1;
+	}
+
+	// recursive case n * (n-1);
+	return n * factorial(n - 1);
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
+  // base case array.length is 0
+  if(array.length === 0) {
+  	return 0;
+  }
+
+  // recursive case add current element + sum of remaining element
+  return array[0] + sum(array.slice(1));
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+	// base case: lenght of array  = 0, return 0
+	if(array.length === 0) {
+		return 0;
+	}
+
+	// recursive case 1: if first item in array is nested (array item is an array)
+	// recrusively call arraySum on first element + arraySum on rest of array
+	if(Array.isArray(array[0]) === true) {
+		return arraySum(array[0]) + arraySum(array.slice(1));
+	}
+
+	// recursive case 2: first item is not an array, return first element + arraySum on rest of array
+	return array[0] + arraySum(array.slice(1));
 };
 
 // 4. Check if a number is even.
-var isEven = function(n) {
+var isEven = function(n) { // Test Cases, Positive, 0 , Negative
+	// base case - its even n = 0
+	if(n === 0) {
+		return true;
+	}
+
+	// base case - its odd when n = 1
+	if(Math.abs(n) === 1) {
+		return false;
+	}
+
+	// recursive case - substract 2 until n is equal to 0 or 1
+	return isEven(Math.abs(n) - 2);
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
-var sumBelow = function(n) {
+var sumBelow = function(n) { // Case 1 should be 0. 0 Should be 0. 2 Should be 1
+
+
+	// base case: n is -1, 0 or 1
+	if(n === -1 || n === -1 || n === 0) {
+		return 0;
+	}
+
+  // recursive case 1: n is a positive integer larger than 1. return n-1 + recursively call sumBelow on n-1 numbers
+	if(n > 0) {
+	  return (n - 1) + sumBelow(n - 1);
+	}
+
+  // recursive case 2: n is a negative integer smaller than -1. return n-1 + recursively call sumBelow on n-1 numbers
+	return (n + 1) + sumBelow(n + 1);
 };
 
 // 6. Get the integers within a range (x, y).

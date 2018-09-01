@@ -72,7 +72,6 @@ var isEven = function(n) { // Test Cases, Positive, 0 , Negative
 // sumBelow(7); // 21
 var sumBelow = function(n) { // Case 1 should be 0. 0 Should be 0. 2 Should be 1
 
-
 	// base case: n is -1, 0 or 1
 	if(n === -1 || n === -1 || n === 0) {
 		return 0;
@@ -90,6 +89,18 @@ var sumBelow = function(n) { // Case 1 should be 0. 0 Should be 0. 2 Should be 1
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+	// base case: when absolute difference of y - x <= 1 returns empty array
+	if(Math.abs(y - x) <= 1) {
+		return [];
+	}
+
+	// recursive case 1: when range is increasing, return array with x + 1 and concats range(x + 1, y)
+	if(y > x){
+		return [x+1].concat(range(x+1, y));
+	}
+
+	// recursive case 2: when range is decreasing, return array with x - 1 and concats range(x - 1, y)
+	return [x - 1].concat(range(x-1, y));
 };
 
 // 7. Compute the exponent of a number.
@@ -98,6 +109,21 @@ var range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+	// base case : exp is to 0 power equals 1
+	if(exp === 0) {
+		return 1;
+	}
+
+	// recursive case 1: when exp is positive, return base * exponent(base, exp - 1);
+	if(exp > 0) {
+		if(exp % 2 === 0) { // recursive case 1 subcase: when exp is positive and even, return base * base * exponent(base, exp - 2);
+			return base * base * exponent(base, exp - 2);
+		}
+	  return base * exponent(base, exp - 1);
+	}
+
+	// recursive case 2: when exp is negative, return 1 / base * exponent(base, exp + 1);
+	return 1 / exponent(base, -exp);
 };
 
 // 8. Determine if a number is a power of two.
@@ -105,14 +131,51 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+	if(n <= 0) {
+		return false;
+	}
+
+	if(n === 1) {
+		return true;
+	}
+
+	return powerOfTwo(n / 2); 
 };
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+	// base case
+	if(string.length === 1) {
+		return string;
+	}
+
+	// recursive case
+	return string[string.length - 1] + reverse(string.slice(0,-1));
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+	// base case - length of char = 0 or 1
+	if(string.length <= 1) {
+		return true;
+	}
+
+	var frontIndex = 0; // checks to ignore spaces from left to right
+	if(string[frontIndex] === ' ') {
+		return palindrome(string.slice(1));
+	}
+
+	var backIndex = string.length - 1; // checks to ignore spaces from to left
+	if(string[backIndex] === ' ') {
+		return palindrome(string.slice(0,-1));
+	}
+
+	// recursive case1 - check front and back. if true check return palindrome of inside
+	if(string[frontIndex].toLowerCase() === string[backIndex].toLowerCase()){
+		return palindrome(string.slice(1,-1));
+	}
+
+	return false;
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -121,11 +184,37 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+	if(y === 0) {
+		return NaN;
+	}
+
+	if(y < 0 && x > 0) {
+		return -modulo(x, -y);
+	}
+
+	if(y > 0 && x < 0) {
+		return -modulo(-x, y);
+	}
+
+	if(y < 0 && x < 0) {
+		return -modulo(-x, -y);
+	}
+
+	if(x < y) {
+		return x;
+	}
+
+	if(x === y) {
+		return 0;
+	}
+
+	return modulo(x - y, y);
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 var multiply = function(x, y) {
+	
 };
 
 // 13. Write a function that divides two numbers without using the / operator or

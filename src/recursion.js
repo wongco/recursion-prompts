@@ -557,6 +557,18 @@ var letterTally = function(str, obj) {
 // compress([1,2,2,3,4,4,5,5,5]) // [1,2,3,4,5]
 // compress([1,2,2,3,4,4,2,5,5,5,4,4]) // [1,2,3,4,2,5,4]
 var compress = function(list) {
+	// base case
+
+	// if list length === 0
+	  // return empty string
+
+	// if 0 element === element 1
+	  // return compression of the list skipping element
+
+	// else
+	  // append to result
+
+	// return result;
 };
 
 // 33. Augument every element in a list with a new value where each element is an array
